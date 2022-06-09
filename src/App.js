@@ -31,7 +31,7 @@ export default function App() {
     const handleResize = delay(() => {
       console.log(window.innerWidth);
       setWidth(window.innerWidth);
-    }, 50);
+    }, 30);
     window.addEventListener('resize', handleResize);
     return () => { window.removeEventListener('resize', handleResize); };
   }, []);

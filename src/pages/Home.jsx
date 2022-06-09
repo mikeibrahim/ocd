@@ -1,8 +1,13 @@
 import React from 'react';
 import Text from '../components/Text.jsx';
 import Panel from '../components/Panel.jsx';
+import Button from '../components/Button.jsx';
 
 export default function Home() {
+  const digitizeCube = () => {
+    window.location.href = '/digitize';
+  }
+
   return (
     <div className="home">
       <Text className="title primary">Obsessive <br /> Cubing <br /> Disorder</Text>
@@ -22,7 +27,10 @@ export default function Home() {
         </div>
       </Panel>
 
-
+      <Button className="primary-bg" onClick={digitizeCube}>
+        <Text id="start" className="light main">Digitize cube</Text>
+        <Text id="arrow" className="light main">→</Text>
+      </Button>
     </div>
   );
 }
