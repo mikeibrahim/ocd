@@ -22,19 +22,15 @@ function delay(fn, ms) {
 
 export default function App() {
   const [width, setWidth] = React.useState(window.innerWidth);
-  const isLarge = width > 600;
-
+  const isLarge = width > 600
   const theme = document.getElementById('theme');
   theme.setAttribute('href', isLarge ? './desktop.css' : './mobile.css');
 
   React.useEffect(() => {
-    const handleResize = delay(() => {
-      console.log(window.innerWidth);
-      setWidth(window.innerWidth);
-    }, 30);
+    const handleResize = delay(() => setWidth(window.innerWidth), 30);
     window.addEventListener('resize', handleResize);
-    return () => { window.removeEventListener('resize', handleResize); };
-  }, []);
+    return () => window.removeEventListener('resize', handleResize);
+  });
 
   return (
     <BrowserRouter>
