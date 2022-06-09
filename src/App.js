@@ -1,3 +1,4 @@
+import React from "react";
 import {
   BrowserRouter,
   Routes,
@@ -7,7 +8,34 @@ import Home from './pages/Home.jsx';
 import Digitize from './pages/Digitize.jsx';
 import Solve from './pages/Solve.jsx';
 
-function App() {
+
+function delay(fn, ms) {
+  let timer
+  return _ => {
+    clearTimeout(timer)
+    timer = setTimeout(_ => {
+      timer = null
+      fn.apply(this, arguments)
+    }, ms)
+  };
+}
+
+export default function App() {
+  const [width, setWidth] = React.useState(window.innerWidth);
+  const isLarge = width > 600;
+
+  const theme = document.getElementById('theme');
+  theme.setAttribute('href', isLarge ? './desktop.css' : './mobile.css');
+
+  React.useEffect(() => {
+    const handleResize = delay(() => {
+      console.log(window.innerWidth);
+      setWidth(window.innerWidth);
+    }, 50);
+    window.addEventListener('resize', handleResize);
+    return () => { window.removeEventListener('resize', handleResize); };
+  }, []);
+
   return (
     <BrowserRouter>
       <Routes>
@@ -18,5 +46,3 @@ function App() {
     </BrowserRouter>
   );
 }
-
-export default App;
