@@ -24,7 +24,7 @@ export default function App() {
   const [width, setWidth] = React.useState(window.innerWidth);
   const isLarge = width > 600
   const theme = document.getElementById('theme');
-  theme.setAttribute('href', isLarge ? './desktop.css' : './mobile.css');
+  theme.setAttribute('href', isLarge ? ' ' : './mobile.css');
 
   React.useEffect(() => {
     const handleResize = delay(() => setWidth(window.innerWidth), 30);
