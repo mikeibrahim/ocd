@@ -1,3 +1,4 @@
+bd: build2 deploy
 build: build2
 
 deploy:

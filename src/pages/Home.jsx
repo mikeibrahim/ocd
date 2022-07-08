@@ -2,6 +2,7 @@ import React from 'react';
 import Text from '../components/Text.jsx';
 import Panel from '../components/Panel.jsx';
 import Button from '../components/Button.jsx';
+import Route from "../components/Route.js";
 
 export default function Home() {
   return (
@@ -23,7 +24,7 @@ export default function Home() {
         </div>
       </Panel>
 
-      <Button className="primary-color-bg" onClick={() => window.location.href = '/digitize'}>
+      <Button className="primary-color-bg" onClick={() => Route('/digitize')}>
         <Text className="light-color lg hide-mobile">Digitize Cube →</Text>
         <Text className="light-color lg hide-desktop">→</Text>
       </Button>
