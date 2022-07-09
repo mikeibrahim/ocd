@@ -15,19 +15,19 @@ const constraints = {
 
 export default function Video(props) {
   let video = React.createRef();
-  let roi = React.createRef();
   let capture = () => {
     let canvas = document.createElement('canvas');
     let context = canvas.getContext('2d');
-    context.drawImage(video.current, 0, 0, constraints.video.width.max, constraints.video.height.max);
-    const img = context.getImageData(0, 0, constraints.video.width.max, constraints.video.height.max)
+    context.drawImage(video.current, 0, 0, 60, 60);
+    const img = context.getImageData(0, 0, 60, 60);
+    // console.log("img", img)
+    // document.getElementById("helpCanvas").getContext("2d").putImageData(img, 0, 0);
     props.setImg(img);
     canvas = null;
     context = null;
   }
 
   const playVideo = () => video.current.play();
-
 
   navigator.mediaDevices.getUserMedia(constraints)
     .then(stream => { if (video.current && !video.current.srcObject) { video.current.srcObject = stream; } })
@@ -41,9 +41,8 @@ export default function Video(props) {
 
   return (
     <>
-      <video id='video' ref={video} autoPlay playsInline muted onCanPlay={playVideo} >
-        <div id="roi" ref={roi}></div>
-      </video>
+      <video id='video' ref={video} autoPlay playsInline muted onCanPlay={playVideo} />
+      {/* <canvas id="helpCanvas"></canvas> */}
       <Button id="capture-button" className={"button " + props.className} onClick={capture}>
         <Text className="light-color med-sm hide-mobile">Capture</Text>
         <Text className="light-color lg hide-desktop">*</Text>

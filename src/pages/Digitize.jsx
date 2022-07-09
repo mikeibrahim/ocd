@@ -23,12 +23,10 @@ export default function Digitize() {
     let input = new Matrix(parsedImage.data.length, parsedImage.data[0].length);
     input.data = parsedImage.data;
     input = input.T();
-    console.log("ipt: ", input);
     let output = trainedModel.predict(input);
     let { result, index } = output.maxDim("row");
     const sectionedImage = sectionImage(index);
     const averagedImage = averageData(sectionedImage);
-    console.log("avg: ", averagedImage);
     const parsedData = parseData(averagedImage);
     let colorData = []
     const colors = ['r', 'o', 'y', 'g', 'b', 'l', 'w'];

@@ -162,9 +162,3 @@ body {
     transform: scaleX(-1);
     pointer-events: none;
   }
-  #roi {
-    z-index: 2;
-    position: absolute;
-    width: 100%;
-    height: 100%;
-  }

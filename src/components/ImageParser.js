@@ -1,8 +1,11 @@
 export default function ImageParser(img) {
   if (!img) return null
+  console.log("img:", img);
   const combinedChannelsImg = combineChannels(img)
-  const reducedQualityImg = reduceQuality(combinedChannelsImg, 60)
-  return reducedQualityImg
+  console.log("combinedChannelsImg:", combinedChannelsImg);
+  // const reducedQualityImg = reduceQuality(combinedChannelsImg, 10)
+  // console.log("reducedQualityImg:", reducedQualityImg);
+  return combinedChannelsImg
 }
 
 function combineChannels(img) {
@@ -17,24 +20,28 @@ function combineChannels(img) {
   return combinedChannelsImg
 }
 
-// return a new image with a length of targetDim * targetDim
-function reduceQuality(combinedChannelsImg, targetDim) {
-  const reducedQualityImg = {
-    width: targetDim,
-    height: targetDim,
-    data: []
-  }
+// // return a new image with a length of targetDim * targetDim
+// function reduceQuality(combinedChannelsImg, targetDim) {
+//   const reducedQualityImg = {
+//     width: targetDim,
+//     height: targetDim,
+//     data: []
+//   }
 
-  const xStep = Math.floor(combinedChannelsImg.width / targetDim)
-  const yStep = Math.floor(combinedChannelsImg.height / targetDim)
+//   const imgDim = combinedChannelsImg.width
 
-  for (let y = 0; y < targetDim; y++) {
-    for (let x = 0; x < targetDim; x++) {
-      const xIndex = x * xStep
-      const yIndex = y * yStep
-      const pixel = combinedChannelsImg.data[yIndex * combinedChannelsImg.width + xIndex]
-      reducedQualityImg.data.push(pixel)
-    }
-  }
-  return reducedQualityImg
-}
+//   for (let y = 0; y < targetDim; y++) {
+//     for (let x = 0; x < targetDim; x++) {
+//       let xMap = Math.floor(x * imgDim / targetDim)
+//       let yMap = Math.floor(y * imgDim / targetDim)
+//       let idx = yMap * imgDim + xMap
+//       console.log("xMap:", xMap);
+//       console.log("yMap:", yMap);
+//       console.log("idx:", idx);
+//       let pixel = combinedChannelsImg.data[idx]
+//       console.log("pixel:", pixel);
+//       reducedQualityImg.data.push(pixel)
+//     }
+//   }
+//   return reducedQualityImg
+// }
