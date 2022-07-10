@@ -2,7 +2,7 @@ import React from "react"
 import Text from "../components/Text.jsx"
 import Button from "../components/Button.jsx"
 import Video from "../components/Video.jsx";
-import CubeData from "../components/CubeData.jsx";
+import FaceEditor from "../components/FaceEditor.jsx";
 import ImageParser from "../components/ImageParser.js";
 import Route from "../components/Route.js";
 import trainedModel from '../ml/training';
@@ -12,33 +12,28 @@ export default function Digitize() {
   // state variables
   const [img, setImg] = React.useState(null);
   const [currentSide, setCurrentSide] = React.useState(0); // 0 = front, 1 = left, 2 = back, 3 = right, 4 = top, 5 = bottom
-  const [cubeData, setCubeData] = React.useState([null, null, null, null, null, null]);
-  console.log(cubeData);
+  const [cubeData, setCubeData] = React.useState([[], [], [], [], [], []]);
+
   // element conditionals
   const isPreviousButtonDisabled = currentSide === 0 ? "button-disabled" : "";
   const isNextButtonDisabled = currentSide === 5 ? "button-disabled" : "";
 
+  // Captures a side from the camera
   const updateSide = () => {
-    const parsedImage = ImageParser(img);
+    const parsedImage = ImageParser(img); // Get image from camera
     let input = new Matrix(parsedImage.data.length, parsedImage.data[0].length);
     input.data = parsedImage.data;
     input = input.T();
-    let output = trainedModel.predict(input);
+    let output = trainedModel.predict(input); // Predict the face in the given image
     let { result, index } = output.maxDim("row");
     const sectionedImage = sectionImage(index);
     const averagedImage = averageData(sectionedImage);
     const parsedData = parseData(averagedImage);
-    let colorData = []
-    const colors = ['r', 'o', 'y', 'g', 'b', 'l', 'w'];
-    for (let i = 0; i < parsedData.length; i++) {
-      colorData.push(colors[parsedData[i]]);
-    }
-
-    console.log(colorData);
-    setImg(null);
-    setCubeData([...cubeData.slice(0, currentSide), parsedData, ...cubeData.slice(currentSide + 1)]);
+    setFaceData(parsedData);
+    setImg(null)
   }
 
+  // Helper functions
   const sectionImage = (classifiedImage) => {
     let size = Math.sqrt(classifiedImage.data[0].length);
     classifiedImage = classifiedImage.reshape(size, size); // Turn into square
@@ -60,10 +55,18 @@ export default function Digitize() {
       parsedData.data[i][j] = averagedImage[i * 3 + j].data[0][0];
     return parsedData.reshape(1, 9).data[0];
   }
-
-  if (img) {
-    updateSide();
+  const setFaceData = (parsedData) => {
+    let colorData = []
+    const colors = ['r', 'o', 'y', 'g', 'b', 'l', 'w'];
+    for (let i = 0; i < parsedData.length; i++) {
+      colorData.push(colors[parsedData[i]]);
+    }
+    setCubeData([...cubeData.slice(0, currentSide), colorData, ...cubeData.slice(currentSide + 1)]);
   }
+  const getCurrentFaceData = () => cubeData[currentSide];
+
+  // If there is an image to parse into face data, parse it
+  if (img) updateSide();
 
   return (
     <div className="digitize dark-color-bg">
@@ -87,7 +90,7 @@ export default function Digitize() {
 
         {/* cube */}
         {/* <Text> cube placeholder </Text> */}
-        {/* <CubeData img={img} currentSide={currentSide} setCurrentSide={setCurrentSide} /> */}
+        <FaceEditor setFaceData={setFaceData} currentFaceData={getCurrentFaceData()} />
 
         {/* progress bar */}
         <Text> progress bar placeholder </Text>

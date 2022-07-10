@@ -162,3 +162,16 @@ body {
     transform: scaleX(-1);
     pointer-events: none;
   }
+  .digitize #face-editor {
+    width: 20vw;
+    height: 20vw;
+    display: flex;
+    align-items: center;
+    justify-content: space-evenly;
+    flex-wrap: wrap;
+    background-color: #E0E0E0;
+  }
+  .digitize .face-square {
+    width: 30%;
+    height: 30%;
+  }

@@ -7,8 +7,8 @@ import Text from './Text';
 const constraints = {
   audio: false,
   video: {
-    width: { max: 500 },
-    height: { max: 500 },
+    width: { max: 600 },
+    height: { max: 600 },
     facingMode: 'environment' // or 'environment'
   }
 }

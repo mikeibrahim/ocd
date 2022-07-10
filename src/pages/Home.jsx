@@ -15,7 +15,7 @@ export default function Home() {
           <Text className="sm">Through the use of computer vision and machine learning, this web-app makes it possible for everyone to solve a rubiks cube, regardless of prior knowledge of cubing algorithms (or lack thereof).</Text>
         </div>
 
-        <Text className="lg primary-color">Never get stuck, <br /> ease your ocd...</Text>
+        <Text className="lg primary-color">Never get stuck, <br /> ease your OCD...</Text>
 
         <div className="panel-info">
           <Text className="med dark-color">Why?</Text>
