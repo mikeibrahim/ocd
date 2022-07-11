@@ -87,3 +87,7 @@
     top: 0;
     transform: scaleX(1);
   }
+  .digitize #face-editor {
+    width: 25vh;
+    height: 25vh;
+  }

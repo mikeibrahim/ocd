@@ -1,10 +1,7 @@
 export default function ImageParser(img) {
   if (!img) return null
-  console.log("img:", img);
   const combinedChannelsImg = combineChannels(img)
-  console.log("combinedChannelsImg:", combinedChannelsImg);
   // const reducedQualityImg = reduceQuality(combinedChannelsImg, 10)
-  // console.log("reducedQualityImg:", reducedQualityImg);
   return combinedChannelsImg
 }
 
@@ -35,11 +32,7 @@ function combineChannels(img) {
 //       let xMap = Math.floor(x * imgDim / targetDim)
 //       let yMap = Math.floor(y * imgDim / targetDim)
 //       let idx = yMap * imgDim + xMap
-//       console.log("xMap:", xMap);
-//       console.log("yMap:", yMap);
-//       console.log("idx:", idx);
 //       let pixel = combinedChannelsImg.data[idx]
-//       console.log("pixel:", pixel);
 //       reducedQualityImg.data.push(pixel)
 //     }
 //   }

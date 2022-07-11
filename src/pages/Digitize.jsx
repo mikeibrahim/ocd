@@ -3,6 +3,7 @@ import Text from "../components/Text.jsx"
 import Button from "../components/Button.jsx"
 import Video from "../components/Video.jsx";
 import FaceEditor from "../components/FaceEditor.jsx";
+import ProgressBar from "../components/ProgressBar.jsx";
 import ImageParser from "../components/ImageParser.js";
 import Route from "../components/Route.js";
 import trainedModel from '../ml/training';
@@ -15,8 +16,6 @@ export default function Digitize() {
   const [cubeData, setCubeData] = React.useState([[], [], [], [], [], []]);
 
   // element conditionals
-  const isPreviousButtonDisabled = currentSide === 0 ? "button-disabled" : "";
-  const isNextButtonDisabled = currentSide === 5 ? "button-disabled" : "";
 
   // Captures a side from the camera
   const updateSide = () => {
@@ -29,7 +28,12 @@ export default function Digitize() {
     const sectionedImage = sectionImage(index);
     const averagedImage = averageData(sectionedImage);
     const parsedData = parseData(averagedImage);
-    setFaceData(parsedData);
+    let faceData = []
+    const colors = ['red', 'orange', 'yellow', 'green', 'blue', 'black', 'white'];
+    for (let i = 0; i < parsedData.length; i++) {
+      faceData.push(colors[parsedData[i]]);
+    }
+    setFaceData(faceData);
     setImg(null)
   }
 
@@ -55,15 +59,13 @@ export default function Digitize() {
       parsedData.data[i][j] = averagedImage[i * 3 + j].data[0][0];
     return parsedData.reshape(1, 9).data[0];
   }
-  const setFaceData = (parsedData) => {
-    let colorData = []
-    const colors = ['r', 'o', 'y', 'g', 'b', 'l', 'w'];
-    for (let i = 0; i < parsedData.length; i++) {
-      colorData.push(colors[parsedData[i]]);
-    }
-    setCubeData([...cubeData.slice(0, currentSide), colorData, ...cubeData.slice(currentSide + 1)]);
-  }
+  const isPreviousButtonDisabled = () => currentSide === 0 ? "button-disabled" : "";
+  const isNextButtonDisabled = () => currentSide === 5 || cubeData[currentSide].length == 0 ? "button-disabled" : "";
+  const isSolveButtonDisabled = () => cubeData[currentSide].length == 0 ? "button-disabled" : "";
+  const setFaceData = (faceData) => setCubeData([...cubeData.slice(0, currentSide), faceData, ...cubeData.slice(currentSide + 1)]);
   const getCurrentFaceData = () => cubeData[currentSide];
+  const updateCurrentSide = (direction) => setCurrentSide(currentSide + direction);
+  const getNumSides = () => cubeData.map(side => side.length != 0 ? 1 : 0).reduce((a, b) => a + b);
 
   // If there is an image to parse into face data, parse it
   if (img) updateSide();
@@ -93,18 +95,22 @@ export default function Digitize() {
         <FaceEditor setFaceData={setFaceData} currentFaceData={getCurrentFaceData()} />
 
         {/* progress bar */}
-        <Text> progress bar placeholder </Text>
+        <ProgressBar currentSide={currentSide} numSides={getNumSides()} setCurrentSide={setCurrentSide} />
 
         {/* bottm panel of buttons */}
         <div className="button-panel">
-          <Button className={"dark-color-bg med-btn " + isPreviousButtonDisabled} onClick={() => console.log("previous")}>
+          <Button className={"dark-color-bg med-btn " + isPreviousButtonDisabled()} onClick={() => updateCurrentSide(-1)}>
             <Text className="light-color med-sm hide-mobile">Previous</Text>
             <Text className="light-color lg hide-desktop">←</Text>
           </Button>
-          <Button className={"dark-color-bg med-btn " + isNextButtonDisabled} onClick={() => console.log("next")}>
+          {currentSide < 5 && <Button className={"dark-color-bg med-btn " + isNextButtonDisabled()} onClick={() => updateCurrentSide(1)}>
             <Text className="light-color med-sm hide-mobile">Next</Text>
             <Text className="light-color lg hide-desktop">→</Text>
-          </Button>
+          </Button>}
+          {currentSide == 5 && <Button className={"primary-color-bg med-btn " + isSolveButtonDisabled()} onClick={() => Route('/solve')}>
+            <Text className="light-color med-sm hide-mobile">Solve</Text>
+            <Text className="light-color lg hide-desktop">✓</Text>
+          </Button>}
         </div>
       </div>
     </div>

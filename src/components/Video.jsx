@@ -7,6 +7,7 @@ import Text from './Text';
 const constraints = {
   audio: false,
   video: {
+    aspectRatio: 1,
     width: { max: 600 },
     height: { max: 600 },
     facingMode: 'environment' // or 'environment'
@@ -20,7 +21,6 @@ export default function Video(props) {
     let context = canvas.getContext('2d');
     context.drawImage(video.current, 0, 0, 60, 60);
     const img = context.getImageData(0, 0, 60, 60);
-    // console.log("img", img)
     // document.getElementById("helpCanvas").getContext("2d").putImageData(img, 0, 0);
     props.setImg(img);
     canvas = null;
