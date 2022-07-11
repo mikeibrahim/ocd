@@ -34,8 +34,8 @@ export default function ProgressBar(props) {
               borderColor: index == currentSide ? green : black,
               backgroundColor: index >= numSides ? white : green,
               fontWeight: index == currentSide ? "400" : "200",
-              fontSize: "1.6vw",
-              width: index == currentSide ? "6vw" : "4vw",
+              fontSize: "max(1.6vw, 2.3vh)",
+              width: index == currentSide ? "max(8vw, 8vh)" : "max(4vw, 4vh)",
               cursor: index > numSides ? "default" : "pointer"
             }}>
               {text}

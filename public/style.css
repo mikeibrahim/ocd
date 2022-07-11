@@ -41,11 +41,11 @@ body {
 .lg {
   font-weight: 500;
   white-space: nowrap;
-  font-size: 2.75vw;
+  font-size: 3vw;
 }
 .med {
   font-weight: 250;
-  font-size: 3vw;
+  font-size: 2.5vw;
 }
 .med-sm {
   font-weight: 200;
@@ -190,7 +190,6 @@ body {
     border: 3px solid var(--dark-color);
   }
   .digitize #progress-bar-bg {
-    width: 50%;
     height: 100%;
     border-radius: 5vw;
     background-color: #57CC99;

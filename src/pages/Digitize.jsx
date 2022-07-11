@@ -10,12 +10,10 @@ import trainedModel from '../ml/training';
 import { Matrix } from '../ml/network';
 
 export default function Digitize() {
-  // state variables
+  // Data
   const [img, setImg] = React.useState(null);
   const [currentSide, setCurrentSide] = React.useState(0); // 0 = front, 1 = left, 2 = back, 3 = right, 4 = top, 5 = bottom
   const [cubeData, setCubeData] = React.useState([[], [], [], [], [], []]);
-
-  // element conditionals
 
   // Captures a side from the camera
   const updateSide = () => {
@@ -72,12 +70,12 @@ export default function Digitize() {
 
   return (
     <div className="digitize dark-color-bg">
-      {/* video */}
+      {/* Video */}
       <Video setImg={setImg} className="lg-btn primary-color-bg" />
 
-      {/* white panel of controls */}
+      {/* Control Panel */}
       <div className="digitize-panel light-color-bg">
-        {/* top panel of buttons */}
+        {/* Top Controls */}
         <div className="button-panel">
           <Button className="dark-color-bg sm-btn" onClick={() => Route('/')}>
             <Text className="light-color sm hide-mobile">Back</Text>
@@ -90,14 +88,10 @@ export default function Digitize() {
           </Button>
         </div>
 
-        {/* cube */}
-        {/* <Text> cube placeholder </Text> */}
         <FaceEditor setFaceData={setFaceData} currentFaceData={getCurrentFaceData()} />
-
-        {/* progress bar */}
         <ProgressBar currentSide={currentSide} numSides={getNumSides()} setCurrentSide={setCurrentSide} />
 
-        {/* bottm panel of buttons */}
+        {/* Bottom Controls */}
         <div className="button-panel">
           <Button className={"dark-color-bg med-btn " + isPreviousButtonDisabled()} onClick={() => updateCurrentSide(-1)}>
             <Text className="light-color med-sm hide-mobile">Previous</Text>
