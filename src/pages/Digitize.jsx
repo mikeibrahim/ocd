@@ -11,12 +11,11 @@ import { Matrix } from '../ml/network';
 
 export default function Digitize() {
   // Data
-  const [img, setImg] = React.useState(null);
   const [currentSide, setCurrentSide] = React.useState(0); // 0 = front, 1 = left, 2 = back, 3 = right, 4 = top, 5 = bottom
   const [cubeData, setCubeData] = React.useState([[], [], [], [], [], []]);
 
   // Captures a side from the camera
-  const updateSide = () => {
+  const updateSide = (img) => {
     const parsedImage = ImageParser(img); // Get image from camera
     let input = new Matrix(parsedImage.data.length, parsedImage.data[0].length);
     input.data = parsedImage.data;
@@ -32,7 +31,7 @@ export default function Digitize() {
       faceData.push(colors[parsedData[i]]);
     }
     setFaceData(faceData);
-    setImg(null)
+    // setImg(null)
   }
 
   // Helper functions
@@ -66,12 +65,12 @@ export default function Digitize() {
   const getNumSides = () => cubeData.map(side => side.length != 0 ? 1 : 0).reduce((a, b) => a + b);
 
   // If there is an image to parse into face data, parse it
-  if (img) updateSide();
+  // if (img) updateSide();
 
   return (
     <div className="digitize dark-color-bg">
       {/* Video */}
-      <Video setImg={setImg} className="lg-btn primary-color-bg" />
+      <Video updateSide={updateSide} className="lg-btn primary-color-bg" />
 
       {/* Control Panel */}
       <div className="digitize-panel light-color-bg">

@@ -2,8 +2,6 @@ import React from 'react';
 import Button from './Button';
 import Text from './Text';
 
-
-
 const constraints = {
   audio: false,
   video: {
@@ -16,21 +14,31 @@ const constraints = {
 
 export default function Video(props) {
   let video = React.createRef();
+
+
   let capture = () => {
     let canvas = document.createElement('canvas');
     let context = canvas.getContext('2d');
+    console.log("video", video);
+    console.log("video.current", video.current);
     context.drawImage(video.current, 0, 0, 60, 60);
     const img = context.getImageData(0, 0, 60, 60);
+    console.log("img", img)
     // document.getElementById("helpCanvas").getContext("2d").putImageData(img, 0, 0);
-    props.setImg(img);
+    props.updateSide(img);
     canvas = null;
     context = null;
   }
 
   const playVideo = () => video.current.play();
 
-  navigator.mediaDevices.getUserMedia(constraints)
-    .then(stream => { if (video.current && !video.current.srcObject) { video.current.srcObject = stream; } })
+  if (!navigator.mediaDevices) {
+    console.log("Sorry, getUserMedia is not supported");
+  } else {
+    navigator.mediaDevices.getUserMedia(constraints)
+      .then(stream => { if (video.current && !video.current.srcObject) { video.current.srcObject = stream; } })
+      .catch(error => console.log(error));
+  }
 
   React.useEffect(() => {
     const button = document.getElementById("capture-button")
@@ -41,7 +49,7 @@ export default function Video(props) {
 
   return (
     <>
-      <video id='video' ref={video} autoPlay playsInline muted onCanPlay={playVideo} />
+      <video id='video' ref={video} autoPlay playsInline onCanPlay={playVideo} />
       {/* <canvas id="helpCanvas"></canvas> */}
       <Button id="capture-button" className={"button " + props.className} onClick={capture}>
         <Text className="light-color med-sm hide-mobile">Capture</Text>
