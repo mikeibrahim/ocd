@@ -25,7 +25,7 @@ export default function Home() {
       </Panel>
 
       <Button className="primary-color-bg" onClick={() => Route('/digitize')}>
-        <Text className="light-color lg hide-mobile">Digitize Cube →</Text>
+        <Text className="light-color lg hide-mobile">Digitize Cube</Text>
         <Text className="light-color lg hide-desktop">→</Text>
       </Button>
     </div>

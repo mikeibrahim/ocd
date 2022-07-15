@@ -8,11 +8,13 @@ import ImageParser from "../components/ImageParser.js";
 import Route from "../components/Route.js";
 import trainedModel from '../ml/training';
 import { Matrix } from '../ml/network';
+import { Link } from "react-router-dom";
 
 export default function Digitize() {
   // Data
   const [currentSide, setCurrentSide] = React.useState(0); // 0 = front, 1 = left, 2 = back, 3 = right, 4 = top, 5 = bottom
   const [cubeData, setCubeData] = React.useState([[], [], [], [], [], []]);
+
 
   // Captures a side from the camera
   const updateSide = (img) => {
@@ -31,7 +33,6 @@ export default function Digitize() {
       faceData.push(colors[parsedData[i]]);
     }
     setFaceData(faceData);
-    // setImg(null)
   }
 
   // Helper functions
@@ -63,9 +64,6 @@ export default function Digitize() {
   const getCurrentFaceData = () => cubeData[currentSide];
   const updateCurrentSide = (direction) => setCurrentSide(currentSide + direction);
   const getNumSides = () => cubeData.map(side => side.length != 0 ? 1 : 0).reduce((a, b) => a + b);
-
-  // If there is an image to parse into face data, parse it
-  // if (img) updateSide();
 
   return (
     <div className="digitize dark-color-bg">
@@ -100,9 +98,11 @@ export default function Digitize() {
             <Text className="light-color med-sm hide-mobile">Next</Text>
             <Text className="light-color lg hide-desktop">→</Text>
           </Button>}
-          {currentSide == 5 && <Button className={"primary-color-bg med-btn " + isSolveButtonDisabled()} onClick={() => Route('/solve')}>
-            <Text className="light-color med-sm hide-mobile">Solve</Text>
-            <Text className="light-color lg hide-desktop">✓</Text>
+          {currentSide == 5 && <Button className={"primary-color-bg med-btn " + isSolveButtonDisabled()}>
+            <Link to={{ pathname: "/solve", }} state={{ cubeData: cubeData }}>
+              <Text className="light-color med-sm hide-mobile">Solve</Text>
+              <Text className="light-color lg hide-desktop">✓</Text>
+            </Link>
           </Button>}
         </div>
       </div>

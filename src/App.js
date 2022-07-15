@@ -7,6 +7,7 @@ import {
 import Home from './pages/Home.jsx';
 import Digitize from './pages/Digitize.jsx';
 import Solve from './pages/Solve.jsx';
+import Help from './pages/Help.jsx';
 
 
 function delay(fn, ms) {
@@ -38,6 +39,7 @@ export default function App() {
         <Route path="/" element={<Home />} />
         <Route path="digitize" element={<Digitize />} />
         <Route path="solve" element={<Solve />} />
+        <Route path="help" element={<Help />} />
       </Routes>
     </BrowserRouter>
   );

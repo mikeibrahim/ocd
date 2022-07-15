@@ -1,3 +1,7 @@
+html,
+body {
+  overflow: hidden;
+}
 :root {
   --primary-color: #57CC99;
   --light-color: #FAFAFA;
@@ -80,7 +84,7 @@ body {
     cursor: pointer;
   }
 .button-disabled {
-  background-color: #E0E0E0;
+  opacity: 0.5;
   cursor: default;
   pointer-events: none;
 }
@@ -210,4 +214,43 @@ body {
     border-radius: 5vw;
     border: 3px solid var(--dark-color);
     background-color: var(--light-color);
+  }
+
+/* solve */
+.solve {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100vh;
+}
+  .solve .button-panel {
+    width: 80%;
+    position: absolute;
+    top: 5vw;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+  }
+  .solve #button-container {
+    position: absolute;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    bottom: 2vw;
+    margin: 1vw;
+    width: 60vw;
+  }
+  .solve #move-container {
+    position: absolute;
+    display: flex;
+    flex-direction: row;
+    bottom: 9vw;
+    transition: all 0.2s ease-in-out;
+  }
+  .solve .move {
+    width: 150px;
   }

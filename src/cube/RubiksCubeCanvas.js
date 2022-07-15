@@ -15,24 +15,15 @@ class RubiksCubeCanvas {
 	setup = (p5, canvasParentRef) => {
 		let canvas = p5.createCanvas(800, 800, p5.WEBGL).parent(canvasParentRef);
 		canvas.style("display", "block");
-		canvas.style("width", "min(100vh, 100vw)");
-		canvas.style("height", "min(100vh, 100vw)");
-
-		this.camera = p5.createCamera();
-		this.camRadius = 200;
-		this.xMag = 3;
-		this.yMag = 1;
+		canvas.style("width", "min(80vh, 80vw)");
+		canvas.style("height", "min(80vh, 80vw)");
+		p5.camera(-115, -100, -50);
 	};
 
 	draw = (p5) => {
-		p5.background(51, 51, 51);
-		const a1 = this.xMag * Math.PI / 2 * (p5.mouseX + p5.width / 2) / (p5.width / 2);
-		const a2 = this.yMag * -Math.PI / 2 * (p5.mouseY - p5.height / 2) / (p5.height / 2);
-		const camX = Math.cos(a2) * Math.cos(a1), camY = Math.sin(a2), camZ = Math.cos(a2) * Math.sin(a1);
-		this.camera.setPosition(this.camRadius * camX, this.camRadius * camY, this.camRadius * camZ);
-		this.camera.lookAt(0, 0, 0);
+		p5.background(255);
+		p5.orbitControl(10);
 
-		// this.rc.draw(p5);
 		this.rcv.draw(p5);
 	};
 
