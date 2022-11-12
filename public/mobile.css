@@ -101,3 +101,12 @@
     border: 2px solid var(--dark-color);
     background-color: var(--light-color);
   }
+
+  .solve .button-panel {
+    width: 90%;
+    top: 5vh;
+  }
+  .solve .button-panel > * {
+    width: 70vw;
+    overflow-wrap: break-word;
+  }
